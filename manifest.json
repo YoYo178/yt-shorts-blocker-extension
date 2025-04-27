@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "YT Shorts Blocker",
+    "description": "A Chrome extension to hide/block YouTube Shorts.",
+    "version": "1.0",
+    "content_scripts": [
+      {
+        "js": [
+          "content-script.js"
+        ],
+        "matches": [
+          "http://*.youtube.com//"
+        ]
+      }
+    ]
+  }
