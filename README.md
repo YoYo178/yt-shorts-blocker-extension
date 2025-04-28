@@ -21,15 +21,19 @@
   - **Brave**: brave://extensions/
   - **Opera**: opera://extensions/
 
-- Enable "Developer mode" in the top right corner
-- Click "Load unpacked" and select the unzipped folder
-- The extension should now be installed and active
+- CRX File:
+  - Drag and drop the **.crx** file to the extensions page and install the extension
+
+- ZIP File:
+  - Enable "Developer mode" in the top right corner
+  - Click "Load unpacked" and select the unzipped folder
+  - The extension should now be installed and active
 
 ### Firefox
-
-- Visit the Firefox Add-ons page
-- Click "Add to Firefox"
-- Follow the prompts to complete installation
+#### Make sure to download the Firefox version of the extension!
+- Open your browser and head over to the `about:debugging` page
+- Navigate to "This Firefox" from the sidebar
+- Click on "Load Temporary Add-on..." and select the **.zip** file of the extension
 
 ## 🛠️ Development
 ### Prerequisites
