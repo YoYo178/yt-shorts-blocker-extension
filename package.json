@@ -1,7 +1,14 @@
 {
   "name": "yt-shorts-blocker-extension",
-  "private": true,
-  "version": "0.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "-_YoYo178_-"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YoYo178/yt-shorts-blocker-extension"
+  },
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
