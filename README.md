@@ -1,54 +1,81 @@
-# React + TypeScript + Vite
+# YouTube Shorts Blocker
+#### A browser extension that removes YouTube Shorts from your YouTube experience, helping you avoid the endless scrolling of short-form content and focus on regular videos.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Features
+- Completely removes the Shorts tab from YouTube's navigation bar
+- Hides Shorts from appearing in YouTube's home feed and search results
+- Blocks the YouTube Shorts player page from loading
+- Minimal performance impact
+- No data collection or tracking
+- Open source and completely free
 
-Currently, two official plugins are available:
+## 📋 Installation
+### Chrome / Edge / Brave / Opera
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Download the latest release from the Releases page
+- Unzip the file
+- Open your browser and navigate to the extensions page:
+  - **Chrome**: chrome://extensions/
+  - **Edge**: edge://extensions/
+  - **Brave**: brave://extensions/
+  - **Opera**: opera://extensions/
 
-## Expanding the ESLint configuration
+- Enable "Developer mode" in the top right corner
+- Click "Load unpacked" and select the unzipped folder
+- The extension should now be installed and active
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Firefox
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Visit the Firefox Add-ons page
+- Click "Add to Firefox"
+- Follow the prompts to complete installation
+
+## 🛠️ Development
+### Prerequisites
+
+- Node.js (v14 or later)
+- npm or yarn
+
+### Setup
+```bash
+# Clone the repository
+git clone https://github.com/YoYo178/yt-shorts-blocker-extension.git
+
+# Navigate to the project directory
+cd yt-shorts-blocker-extension
+
+# Install dependencies
+npm install
+# or
+yarn install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Run
+```bash
+# Run in development environment (Pop-up only)
+yarn run dev
+# or
+npm run dev
 ```
+
+### Build
+```bash
+# Build for development
+npm run build
+# or
+yarn run build
+```
+
+### Load unpacked extension
+- Build the project
+- Load the `dist` folder as an unpacked extension in your browser
+
+## 🔄 How It Works
+### The extension works by:
+
+- Injecting CSS to hide Shorts-related elements
+- Using a content script to remove Shorts components from the DOM
+- Redirecting any YouTube Shorts URLs to the regular video player
+
+## 📜 License
+### This project is licensed under the MIT License - see the LICENSE file for details.
