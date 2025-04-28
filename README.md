@@ -1,5 +1,6 @@
 # YouTube Shorts Blocker
-#### A browser extension that removes YouTube Shorts from your YouTube experience, helping you avoid the endless scrolling of short-form content and focus on regular videos.
+### A browser extension that removes YouTube Shorts from your YouTube experience, helping you avoid the endless scrolling of short-form content and focus on regular videos.
+### Made using React + TypeScript template powered by [Vite](https://vite.dev/).
 
 ## 🚀 Features
 - Completely removes the Shorts tab from YouTube's navigation bar
