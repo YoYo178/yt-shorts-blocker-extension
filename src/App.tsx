@@ -1,33 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [hideShorts, setHideShorts] = useState(false);
+  const [blockShorts, setBlockShorts] = useState(false);
+
+  // Load saved settings on popup open
+  useEffect(() => {
+    chrome.storage.local.get(['hideShorts', 'blockShorts'], (result) => {
+      setHideShorts(result.hideShorts || false);
+      setBlockShorts(result.blockShorts || false);
+    });
+  }, []);
+
+  useEffect(() => {
+    // When the toggle state changes, save it and send to content script
+    chrome.storage.local.set({ hideShorts });
+    
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0].id)
+        chrome.tabs.sendMessage(tabs[0].id, { 
+          type: "HIDE_SHORTS_TOGGLE", 
+          payload: hideShorts 
+        });
+    });
+  }, [hideShorts])
+
+  useEffect(() => {
+    // When the toggle state changes, save it and send to content script
+    chrome.storage.local.set({ blockShorts });
+    
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0].id)
+        chrome.tabs.sendMessage(tabs[0].id, { 
+          type: "BLOCK_SHORTS_TOGGLE", 
+          payload: blockShorts 
+        });
+    });
+  }, [blockShorts])
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1>YouTube Shorts Blocker</h1>
+
+      <div className="buttons-container">
+        <div className="button-container">
+          <button
+            className={`toggle-btn ${hideShorts ? 'toggled' : ''}`}
+            onClick={() => setHideShorts(!hideShorts)}
+          >
+            <div className='thumb'></div>
+          </button>
+
+          <span>Hide shorts</span>
+        </div>
+
+        <div className="button-container">
+          <button
+            className={`toggle-btn ${blockShorts ? 'toggled' : ''}`}
+            onClick={() => setBlockShorts(!blockShorts)}
+          >
+            <div className='thumb'></div>
+          </button>
+
+          <span>Block shorts</span>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
