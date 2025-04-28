@@ -16,12 +16,12 @@ function App() {
   useEffect(() => {
     // When the toggle state changes, save it and send to content script
     chrome.storage.local.set({ hideShorts });
-    
+
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs[0].id)
-        chrome.tabs.sendMessage(tabs[0].id, { 
-          type: "HIDE_SHORTS_TOGGLE", 
-          payload: hideShorts 
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: "HIDE_SHORTS_TOGGLE",
+          payload: hideShorts
         });
     });
   }, [hideShorts])
@@ -29,12 +29,12 @@ function App() {
   useEffect(() => {
     // When the toggle state changes, save it and send to content script
     chrome.storage.local.set({ blockShorts });
-    
+
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs[0].id)
-        chrome.tabs.sendMessage(tabs[0].id, { 
-          type: "BLOCK_SHORTS_TOGGLE", 
-          payload: blockShorts 
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: "BLOCK_SHORTS_TOGGLE",
+          payload: blockShorts
         });
     });
   }, [blockShorts])

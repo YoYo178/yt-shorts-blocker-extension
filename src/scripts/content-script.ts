@@ -46,20 +46,20 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
 // Function to safely handle redirects
 function safeRedirect(url: string) {
     if (isRedirecting) return;
-    
+
     isRedirecting = true;
-    
+
     // Clear any existing timeout
     if (redirectTimeout !== null) {
         clearTimeout(redirectTimeout);
     }
-    
+
     // Set a timeout to reset the redirect flag
     redirectTimeout = setTimeout(() => {
         isRedirecting = false;
         redirectTimeout = null;
     }, 2000) as unknown as number;
-    
+
     // Perform the redirect
     window.location.replace(url);
 }
@@ -137,7 +137,7 @@ function blockShortsElements() {
         safeRedirect('https://www.youtube.com/');
         return;
     }
-    
+
     // Add overlay to Shorts buttons instead of removing them
     addShortsButtonOverlays();
 
@@ -156,7 +156,7 @@ function addShortsButtonOverlays() {
                 // Don't modify display style, just prevent clicks
                 if (!button.hasAttribute('data-shorts-blocked')) {
                     button.setAttribute('data-shorts-blocked', 'true');
-                    
+
                     // Create an invisible overlay
                     const overlay = document.createElement('div');
                     overlay.style.position = 'absolute';
@@ -166,12 +166,12 @@ function addShortsButtonOverlays() {
                     overlay.style.height = '100%';
                     overlay.style.zIndex = '9999';
                     overlay.style.cursor = 'not-allowed';
-                    
+
                     // Make button position relative to host the overlay
                     if ((button as HTMLElement).style.position !== 'relative') {
                         (button as HTMLElement).style.position = 'relative';
                     }
-                    
+
                     // Add the blocking click handler
                     overlay.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -179,7 +179,7 @@ function addShortsButtonOverlays() {
                         console.log('Blocked Shorts button click');
                         return false;
                     }, true);
-                    
+
                     button.appendChild(overlay);
                 }
             }
@@ -193,13 +193,13 @@ function removeShortsButtonOverlays() {
     const blockedButtons = document.querySelectorAll('[data-shorts-blocked="true"]');
     blockedButtons.forEach(button => {
         button.removeAttribute('data-shorts-blocked');
-        
+
         // Remove the overlay
         const overlay = button.querySelector('div[style*="position: absolute"]');
         if (overlay) {
             button.removeChild(overlay);
         }
-        
+
         // Reset position if needed
         (button as HTMLElement).style.position = '';
     });
@@ -209,10 +209,10 @@ function removeShortsButtonOverlays() {
 function unblockShortsElements() {
     // Remove the click interceptor
     document.removeEventListener('click', interceptShortsClicks, true);
-    
+
     // Remove button overlays
     removeShortsButtonOverlays();
-    
+
     // Reset redirect flag and clear timeout
     isRedirecting = false;
     if (redirectTimeout !== null) {
@@ -224,9 +224,9 @@ function unblockShortsElements() {
 // Function to intercept clicks on shorts links
 function interceptShortsClicks(e: MouseEvent) {
     const target = (e.target as HTMLElement).closest('a');
-    if (target && (target as HTMLAnchorElement).href && 
-        ((target as HTMLAnchorElement).href.includes('/shorts/') || 
-         (target as HTMLAnchorElement).href.match(/youtube\.com\/shorts\/?/))) {
+    if (target && (target as HTMLAnchorElement).href &&
+        ((target as HTMLAnchorElement).href.includes('/shorts/') ||
+            (target as HTMLAnchorElement).href.match(/youtube\.com\/shorts\/?/))) {
         e.preventDefault();
         e.stopPropagation();
         console.log('Blocked navigation to shorts!');
@@ -245,7 +245,7 @@ function setupMutationObserver() {
         // Debounce the changes to avoid excessive processing
         if (!pendingChanges) {
             pendingChanges = true;
-            
+
             setTimeout(() => {
                 processChanges();
                 pendingChanges = false;
@@ -255,12 +255,12 @@ function setupMutationObserver() {
 
     function processChanges() {
         if (hideShorts) hideShortsElements();
-        
+
         // Handle shorts blocking for dynamic content
         if (blockShorts) {
             // Check for new buttons that might need overlays
             addShortsButtonOverlays();
-            
+
             // Check if we're on shorts and need to redirect
             if (window.location.pathname.includes('/shorts/')) {
                 safeRedirect('https://www.youtube.com/');
